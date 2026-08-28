@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy by Barter | Peer-to-Peer Item Exchange & Cash Top-Up Platform</title>
+    <meta name="description" content="Exchange physical items you own for items you want. Free peer-to-peer barter platform with cash top-up options when item values differ.">
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-root" class="app-container">
+        
+        <!-- HEADER / NAVIGATION -->
+        <header class="main-header">
+            <div class="header-inner">
+                <!-- Brand Logo -->
+                <div class="brand-logo" id="brand-logo-btn">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">Buy by Barter</span>
+                        <span class="logo-tagline">P2P ITEM SWAP</span>
+                    </div>
+                </div>
+
+                <!-- Center Search Bar -->
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search items, categories, or barter wishlists..." autocomplete="off">
+                    <button id="clear-search" class="clear-search-btn hidden">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- User Switcher & Navigation Controls -->
+                <div class="header-right">
+                    <!-- User Switcher Dropdown (P2P Simulator) -->
+                    <div class="user-switcher-container">
+                        <span class="user-switch-label"><i class="fa-solid fa-user-gear"></i> Active Persona:</span>
+                        <div class="user-select-wrapper">
+                            <select id="user-persona-select" class="user-select-dropdown">
+                                <!-- Options populated by JS -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Action Buttons -->
+                    <button class="nav-btn" id="nav-feed-btn" title="Explore Marketplace">
+                        <i class="fa-solid fa-compass"></i>
+                        <span class="nav-btn-text">Marketplace</span>
+                    </button>
+
+                    <button class="nav-btn" id="nav-closet-btn" title="View My Closet">
+                        <i class="fa-solid fa-box-open"></i>
+                        <span class="nav-btn-text">My Closet</span>
+                        <span class="badge-count" id="closet-count-badge">0</span>
+                    </button>
+
+                    <button class="nav-btn" id="nav-inbox-btn" title="Trade Inbox & Offers">
+                        <i class="fa-solid fa-inbox"></i>
+                        <span class="nav-btn-text">Trade Inbox</span>
+                        <span class="badge-count badge-accent" id="inbox-count-badge">0</span>
+                    </button>
+
+                    <button class="btn btn-primary" id="open-add-item-modal-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>List An Item</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO BANNER -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-bolt"></i> 100% Free Peer-to-Peer Barter Platform
+                </div>
+                <h1 class="hero-title">Swap What You Own For What You Want</h1>
+                <p class="hero-subtitle">
+                    Skip selling and spending cash. Trade physical items directly with neighbors. Values don't match? Easily add or request a <strong>Cash Top-Up</strong> to balance the trade!
+                </p>
+                <div class="hero-stats">
+                    <div class="hero-stat-item">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                        <span>Zero Selling Fees</span>
+                    </div>
+                    <div class="hero-stat-item">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Cash Top-Up Supported</span>
+                    </div>
+                    <div class="hero-stat-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Direct P2P Coordination</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN LAYOUT & MARKETPLACE -->
+        <main class="main-content">
+            
+            <!-- FILTERS & CONTROLS TOOLBAR -->
+            <div class="toolbar-container">
+                <!-- Category Pills -->
+                <div class="category-pills" id="category-pills-container">
+                    <button class="pill-btn active" data-category="all">
+                        <i class="fa-solid fa-border-all"></i> All Items
+                    </button>
+                    <button class="pill-btn" data-category="Electronics">
+                        <i class="fa-solid fa-laptop"></i> Electronics
+                    </button>
+                    <button class="pill-btn" data-category="Vintage & Fashion">
+                        <i class="fa-solid fa-shirt"></i> Vintage & Fashion
+                    </button>
+                    <button class="pill-btn" data-category="Gaming & Tech">
+                        <i class="fa-solid fa-gamepad"></i> Gaming & Tech
+                    </button>
+                    <button class="pill-btn" data-category="Music & Audio">
+                        <i class="fa-solid fa-guitar"></i> Music & Audio
+                    </button>
+                    <button class="pill-btn" data-category="Sports & Outdoor">
+                        <i class="fa-solid fa-person-hiking"></i> Sports & Outdoor
+                    </button>
+                    <button class="pill-btn" data-category="Home & Tools">
+                        <i class="fa-solid fa-couch"></i> Home & Tools
+                    </button>
+                </div>
+
+                <!-- Secondary Controls (Top-Up Filter & Sort) -->
+                <div class="toolbar-controls">
+                    <div class="filter-group">
+                        <label for="topup-filter"><i class="fa-solid fa-filter"></i> Trade Type:</label>
+                        <select id="topup-filter" class="select-control">
+                            <option value="all">All Listings</option>
+                            <option value="topup">Allows Cash Top-Up 💵</option>
+                            <option value="straight">Straight Swap Only 🔄</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sort-select"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By:</label>
+                        <select id="sort-select" class="select-control">
+                            <option value="newest">Newest First</option>
+                            <option value="value-desc">Est. Value (High to Low)</option>
+                            <option value="value-asc">Est. Value (Low to High)</option>
+                            <option value="popular">Most Popular</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW CONTAINER (Switches between Marketplace & My Closet) -->
+            <div id="view-header" class="view-header">
+                <div class="view-title-group">
+                    <h2 id="view-title" class="view-title">Available for Barter</h2>
+                    <span id="view-count-text" class="view-count-text">Showing 0 listings</span>
+                </div>
+                <!-- Persona Info Banner -->
+                <div class="persona-active-badge" id="active-persona-banner">
+                    <img id="active-persona-avatar" src="" alt="Avatar" class="avatar-sm">
+                    <span>Logged in as <strong id="active-persona-name">Alex</strong></span>
+                </div>
+            </div>
+
+            <!-- ITEM LISTINGS GRID -->
+            <div class="listings-grid" id="listings-grid">
+                <!-- Dynamically Rendered Barter Cards -->
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div id="empty-state" class="empty-state hidden">
+                <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
+                <h3>No Items Found</h3>
+                <p id="empty-state-msg">No barter listings match your current filters or search query.</p>
+                <button id="reset-filters-btn" class="btn btn-secondary">Reset Filters</button>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="main-footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <span><i class="fa-solid fa-arrow-right-arrow-left"></i> <strong>Buy by Barter</strong></span>
+                    <span class="footer-copy">• Free Peer-to-Peer Physical Exchange Platform</span>
+                </div>
+                <div class="footer-actions">
+                    <button id="reset-demo-data-btn" class="btn btn-text-danger" title="Restore sample users and listings">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Demo Data
+                    </button>
+                </div>
+            </div>
+        </footer>
+
+        <!-- MODAL 1: ITEM DETAILS MODAL -->
+        <div class="modal-overlay hidden" id="item-detail-modal">
+            <div class="modal-card modal-lg">
+                <button class="modal-close-btn" data-close-modal="item-detail-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="item-detail-layout" id="item-detail-content">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL 2: BARTER DEAL BUILDER MODAL (The Trade Proposal Matrix) -->
+        <div class="modal-overlay hidden" id="trade-builder-modal">
+            <div class="modal-card modal-xl">
+                <button class="modal-close-btn" data-close-modal="trade-builder-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="modal-header-banner">
+                    <h2><i class="fa-solid fa-handshake"></i> Propose a Barter Deal</h2>
+                    <p>Select item(s) from your closet and optionally adjust with a Cash Top-Up to balance the trade.</p>
+                </div>
+
+                <div class="trade-builder-grid">
+                    <!-- TARGET ITEM (THE ITEM YOU WANT) -->
+                    <div class="trade-side-box target-item-side">
+                        <div class="side-header">
+                            <span class="side-tag tag-target">Target Item You Want</span>
+                            <span class="side-owner" id="builder-target-owner">Owner: -</span>
+                        </div>
+                        <div class="target-item-card" id="builder-target-card">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- TRADE CONNECTOR / DELTA ICON -->
+                    <div class="trade-vs-divider">
+                        <div class="vs-circle">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <span class="vs-text">FOR</span>
+                    </div>
+
+                    <!-- YOUR OFFER SIDE (CLOSET SELECTION + CASH TOP UP) -->
+                    <div class="trade-side-box offer-item-side">
+                        <div class="side-header">
+                            <span class="side-tag tag-offer">Your Trade Offer</span>
+                            <span class="side-owner" id="builder-offer-owner">Your Closet Items</span>
+                        </div>
+                        
+                        <!-- Select Closet Items -->
+                        <div class="closet-select-section">
+                            <label class="section-label">1. Choose items from your closet to offer:</label>
+                            <div class="closet-picker-list" id="builder-closet-picker">
+                                <!-- Checkbox list of items owned by user -->
+                            </div>
+                        </div>
+
+                        <!-- CASH TOP-UP CALCULATOR -->
+                        <div class="cash-topup-section">
+                            <div class="cash-topup-header">
+                                <label class="section-label">
+                                    <i class="fa-solid fa-money-bill-wave"></i> 2. Cash Top-Up (Value Balancer):
+                                </label>
+                                <span class="delta-calculator-badge" id="trade-value-delta-badge">Value Delta: $0</span>
+                            </div>
+
+                            <div class="topup-options-group">
+                                <div class="topup-radio-row">
+                                    <label class="topup-radio-item">
+                                        <input type="radio" name="topup-direction" value="none" checked id="topup-none-radio">
+                                        <span>No Cash (Straight Swap)</span>
+                                    </label>
+                                    <label class="topup-radio-item">
+                                        <input type="radio" name="topup-direction" value="offer" id="topup-offer-radio">
+                                        <span>I will pay Cash Top-Up 💵</span>
+                                    </label>
+                                    <label class="topup-radio-item">
+                                        <input type="radio" name="topup-direction" value="request" id="topup-request-radio">
+                                        <span>I request Cash Top-Up 🤲</span>
+                                    </label>
+                                </div>
+
+                                <div class="topup-input-row hidden" id="topup-amount-container">
+                                    <span class="currency-symbol">$</span>
+                                    <input type="number" id="topup-amount-input" min="0" max="5000" step="5" value="0" placeholder="Amount (e.g. 50)">
+                                    <span class="topup-hint-text" id="topup-hint">Cash will be added to your offer.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- OFFER MESSAGE -->
+                        <div class="offer-note-section">
+                            <label for="trade-note-input" class="section-label">3. Message to Owner:</label>
+                            <textarea id="trade-note-input" rows="3" placeholder="Explain why this trade is a great fit, offer meet-up suggestions, etc."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TRADE BUILDER FOOTER -->
+                <div class="trade-builder-footer">
+                    <div class="trade-summary-pill" id="trade-builder-summary">
+                        Total Offer Value: <strong>$0</strong> vs Target Value: <strong>$0</strong>
+                    </div>
+                    <div class="footer-btn-group">
+                        <button class="btn btn-secondary" data-close-modal="trade-builder-modal">Cancel</button>
+                        <button class="btn btn-primary btn-lg" id="submit-trade-offer-btn">
+                            <i class="fa-solid fa-paper-plane"></i> Send Trade Proposal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL 3: TRADE INBOX & OFFERS MODAL -->
+        <div class="modal-overlay hidden" id="inbox-modal">
+            <div class="modal-card modal-xl">
+                <button class="modal-close-btn" data-close-modal="inbox-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div class="modal-header-nav">
+                    <h2><i class="fa-solid fa-inbox"></i> Barter Inbox & Offers</h2>
+                    <div class="inbox-tabs">
+                        <button class="inbox-tab-btn active" data-tab="received">
+                            Received Offers (<span id="inbox-received-count">0</span>)
+                        </button>
+                        <button class="inbox-tab-btn" data-tab="sent">
+                            Sent Proposals (<span id="inbox-sent-count">0</span>)
+                        </button>
+                        <button class="inbox-tab-btn" data-tab="accepted">
+                            Active Trades & Chat (<span id="inbox-active-count">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="inbox-tab-content">
+                    <!-- Tab 1: Received Offers -->
+                    <div class="tab-pane active" id="pane-received">
+                        <div class="offers-list" id="received-offers-list">
+                            <!-- JS Rendered -->
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Sent Offers -->
+                    <div class="tab-pane hidden" id="pane-sent">
+                        <div class="offers-list" id="sent-offers-list">
+                            <!-- JS Rendered -->
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Active & Completed Trades -->
+                    <div class="tab-pane hidden" id="pane-accepted">
+                        <div class="offers-list" id="accepted-offers-list">
+                            <!-- JS Rendered -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL 4: MEET-UP & DEAL COORDINATION CHAT MODAL -->
+        <div class="modal-overlay hidden" id="chat-modal">
+            <div class="modal-card modal-lg">
+                <button class="modal-close-btn" data-close-modal="chat-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <h3><i class="fa-solid fa-comments"></i> Trade Coordination Chat</h3>
+                        <p id="chat-trade-subtitle">Trade between You and Partner</p>
+                    </div>
+                    <button class="btn btn-success-sm" id="complete-trade-btn">
+                        <i class="fa-solid fa-circle-check"></i> Mark Trade Completed
+                    </button>
+                </div>
+
+                <!-- SAFETY WARNING BANNER -->
+                <div class="chat-safety-banner">
+                    <i class="fa-solid fa-shield-halved safety-icon"></i>
+                    <div>
+                        <strong>Safe P2P Exchange Tips:</strong>
+                        <span>Meet in a public, well-lit place (e.g. coffee shop, shopping center). Inspect items before swapping. Cash top-ups are paid in person upon exchange.</span>
+                    </div>
+                </div>
+
+                <!-- TRADE DEAL BANNER -->
+                <div class="chat-deal-summary" id="chat-deal-summary-box">
+                    <!-- Rendered by JS -->
+                </div>
+
+                <!-- MESSAGES CONTAINER -->
+                <div class="chat-messages-container" id="chat-messages-list">
+                    <!-- Messages rendered by JS -->
+                </div>
+
+                <!-- CHAT INPUT -->
+                <form class="chat-input-form" id="chat-form">
+                    <input type="text" id="chat-message-input" placeholder="Type a message to agree on meeting location and time..." autocomplete="off">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Send
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL 5: ADD ITEM / MY CLOSET MODAL -->
+        <div class="modal-overlay hidden" id="add-item-modal">
+            <div class="modal-card modal-md">
+                <button class="modal-close-btn" data-close-modal="add-item-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="modal-title-box">
+                    <h2><i class="fa-solid fa-box-archive"></i> List an Item for Barter</h2>
+                    <p>Post a physical item you own to start receiving swap offers from others.</p>
+                </div>
+
+                <form id="add-item-form" class="modal-form">
+                    <div class="form-group">
+                        <label for="item-title-input">Item Title <span class="required">*</span></label>
+                        <input type="text" id="item-title-input" required placeholder="e.g. Sony WH-1000XM4 Wireless Headphones">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="item-category-input">Category <span class="required">*</span></label>
+                            <select id="item-category-input" required class="select-control">
+                                <option value="Electronics">Electronics</option>
+                                <option value="Vintage & Fashion">Vintage & Fashion</option>
+                                <option value="Gaming & Tech">Gaming & Tech</option>
+                                <option value="Music & Audio">Music & Audio</option>
+                                <option value="Sports & Outdoor">Sports & Outdoor</option>
+                                <option value="Home & Tools">Home & Tools</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="item-condition-input">Condition <span class="required">*</span></label>
+                            <select id="item-condition-input" required class="select-control">
+                                <option value="Brand New">Brand New</option>
+                                <option value="Like New" selected>Like New</option>
+                                <option value="Good">Good</option>
+                                <option value="Fair">Fair</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="item-value-input">Estimated Value ($ USD) <span class="required">*</span></label>
+                            <input type="number" id="item-value-input" required min="1" max="10000" step="5" placeholder="e.g. 150">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="item-location-input">Location / City <span class="required">*</span></label>
+                            <input type="text" id="item-location-input" required placeholder="e.g. Brooklyn, NY">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Item Image Preset or Custom URL <span class="required">*</span></label>
+                        <div class="image-preset-picker" id="image-preset-picker">
+                            <!-- Preset clickable thumbnails -->
+                        </div>
+                        <input type="url" id="item-image-url" placeholder="Or enter custom image URL (https://...)" class="mt-2">
+                        <div class="file-upload-row mt-2">
+                            <span>Or upload photo:</span>
+                            <input type="file" id="item-file-input" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-description-input">Description & Details <span class="required">*</span></label>
+                        <textarea id="item-description-input" rows="3" required placeholder="Describe working condition, included accessories, reason for trading..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-wishlist-input">Barter Wishlist ("What do you want in exchange?")</label>
+                        <input type="text" id="item-wishlist-input" placeholder="e.g. Looking for mechanical keyboards, camera lenses, or denim jackets">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="item-topup-allowed-checkbox" checked>
+                            <span>Open to Cash Top-Up if value delta exists 💵</span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" data-close-modal="add-item-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-check"></i> Post Listing to Closet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- TOAST NOTIFICATION CONTAINER -->
+        <div id="toast-container" class="toast-container"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
