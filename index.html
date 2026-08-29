@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy by Barter | Peer-to-Peer Item Exchange & Cash Top-Up Platform</title>
-    <meta name="description" content="Exchange physical items you own for items you want. Free peer-to-peer barter platform with cash top-up options when item values differ.">
+    <title>Buy by Barter | Nigeria P2P Item Exchange & Cash Top-Up Platform</title>
+    <meta name="description" content="Exchange physical items you own for items you want in Nigeria. Free peer-to-peer barter platform with cash top-up options when item values differ.">
     <!-- Google Fonts: Outfit & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,21 +26,27 @@
                     </div>
                     <div class="logo-text">
                         <span class="logo-title">Buy by Barter</span>
-                        <span class="logo-tagline">P2P ITEM SWAP</span>
+                        <span class="logo-tagline">NIGERIA P2P SWAP</span>
                     </div>
                 </div>
 
                 <!-- Center Search Bar -->
                 <div class="header-search">
                     <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    <input type="text" id="search-input" placeholder="Search items, categories, or barter wishlists..." autocomplete="off">
+                    <input type="text" id="search-input" placeholder="Search items, categories, wishlists, or cities..." autocomplete="off">
                     <button id="clear-search" class="clear-search-btn hidden">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
 
-                <!-- User Switcher & Navigation Controls -->
+                <!-- User Switcher & Theme Toggle & Navigation Controls -->
                 <div class="header-right">
+                    <!-- Light / Dark Theme Switcher Toggle -->
+                    <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light / Dark Theme">
+                        <i class="fa-solid fa-sun" id="theme-icon"></i>
+                        <span id="theme-text">Light</span>
+                    </button>
+
                     <!-- User Switcher Dropdown (P2P Simulator) -->
                     <div class="user-switcher-container">
                         <span class="user-switch-label"><i class="fa-solid fa-user-gear"></i> Active Persona:</span>
@@ -71,7 +77,7 @@
 
                     <button class="btn btn-primary" id="open-add-item-modal-btn">
                         <i class="fa-solid fa-plus"></i>
-                        <span>List An Item</span>
+                        <span>Barter an item</span>
                     </button>
                 </div>
             </div>
@@ -81,11 +87,11 @@
         <section class="hero-banner">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fa-solid fa-bolt"></i> 100% Free Peer-to-Peer Barter Platform
+                    <i class="fa-solid fa-bolt"></i> 100% Free Nigerian Peer-to-Peer Barter Platform
                 </div>
                 <h1 class="hero-title">Swap What You Own For What You Want</h1>
                 <p class="hero-subtitle">
-                    Skip selling and spending cash. Trade physical items directly with neighbors. Values don't match? Easily add or request a <strong>Cash Top-Up</strong> to balance the trade!
+                    Skip selling and spending extra cash. Barter physical items directly with neighbors in Lagos, Abuja, Ibadan, & Port Harcourt. Values don't match? Add or request a <strong>Cash Top-Up (₦)</strong> to balance the deal!
                 </p>
                 <div class="hero-stats">
                     <div class="hero-stat-item">
@@ -93,12 +99,12 @@
                         <span>Zero Selling Fees</span>
                     </div>
                     <div class="hero-stat-item">
-                        <i class="fa-solid fa-money-bill-transfer"></i>
-                        <span>Cash Top-Up Supported</span>
+                        <i class="fa-solid fa-naira-sign"></i>
+                        <span>Naira (₦) Cash Top-Up</span>
                     </div>
                     <div class="hero-stat-item">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>Direct P2P Coordination</span>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Neighborhood Proximity</span>
                     </div>
                 </div>
             </div>
@@ -109,7 +115,7 @@
             
             <!-- FILTERS & CONTROLS TOOLBAR -->
             <div class="toolbar-container">
-                <!-- Category Pills -->
+                <!-- Category Pills (Removed Sports & Outdoor) -->
                 <div class="category-pills" id="category-pills-container">
                     <button class="pill-btn active" data-category="all">
                         <i class="fa-solid fa-border-all"></i> All Items
@@ -126,16 +132,25 @@
                     <button class="pill-btn" data-category="Music & Audio">
                         <i class="fa-solid fa-guitar"></i> Music & Audio
                     </button>
-                    <button class="pill-btn" data-category="Sports & Outdoor">
-                        <i class="fa-solid fa-person-hiking"></i> Sports & Outdoor
-                    </button>
                     <button class="pill-btn" data-category="Home & Tools">
                         <i class="fa-solid fa-couch"></i> Home & Tools
                     </button>
                 </div>
 
-                <!-- Secondary Controls (Top-Up Filter & Sort) -->
+                <!-- Secondary Controls (Proximity Filter, Top-Up Filter & Sort) -->
                 <div class="toolbar-controls">
+                    <!-- Proximity Filter -->
+                    <div class="filter-group">
+                        <label for="distance-filter"><i class="fa-solid fa-street-view"></i> Proximity:</label>
+                        <select id="distance-filter" class="select-control">
+                            <option value="all">All Distances</option>
+                            <option value="3">Within 3 km 📍</option>
+                            <option value="5">Within 5 km 📍</option>
+                            <option value="10">Within 10 km 📍</option>
+                            <option value="25">Within 25 km 📍</option>
+                        </select>
+                    </div>
+
                     <div class="filter-group">
                         <label for="topup-filter"><i class="fa-solid fa-filter"></i> Trade Type:</label>
                         <select id="topup-filter" class="select-control">
@@ -151,13 +166,13 @@
                             <option value="newest">Newest First</option>
                             <option value="value-desc">Est. Value (High to Low)</option>
                             <option value="value-asc">Est. Value (Low to High)</option>
-                            <option value="popular">Most Popular</option>
+                            <option value="distance">Closest Distance</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW CONTAINER (Switches between Marketplace & My Closet) -->
+            <!-- VIEW HEADER -->
             <div id="view-header" class="view-header">
                 <div class="view-title-group">
                     <h2 id="view-title" class="view-title">Available for Barter</h2>
@@ -166,7 +181,7 @@
                 <!-- Persona Info Banner -->
                 <div class="persona-active-badge" id="active-persona-banner">
                     <img id="active-persona-avatar" src="" alt="Avatar" class="avatar-sm">
-                    <span>Logged in as <strong id="active-persona-name">Alex</strong></span>
+                    <span>Logged in as <strong id="active-persona-name">Tunde</strong></span>
                 </div>
             </div>
 
@@ -184,15 +199,26 @@
             </div>
         </main>
 
-        <!-- FOOTER -->
+        <!-- FOOTER WITH BACKUP & RESTORE DATA -->
         <footer class="main-footer">
             <div class="footer-inner">
                 <div class="footer-brand">
-                    <span><i class="fa-solid fa-arrow-right-arrow-left"></i> <strong>Buy by Barter</strong></span>
+                    <span><i class="fa-solid fa-arrow-right-arrow-left"></i> <strong>Buy by Barter Nigeria</strong></span>
                     <span class="footer-copy">• Free Peer-to-Peer Physical Exchange Platform</span>
                 </div>
+                
+                <!-- Backup & Restore Controls -->
                 <div class="footer-actions">
-                    <button id="reset-demo-data-btn" class="btn btn-text-danger" title="Restore sample users and listings">
+                    <button id="export-backup-btn" class="btn btn-secondary btn-sm" title="Export closet listings and trade history to JSON file">
+                        <i class="fa-solid fa-download"></i> Backup Data (JSON)
+                    </button>
+                    
+                    <label class="btn btn-secondary btn-sm file-import-label" title="Restore closet listings and trade history from JSON file">
+                        <i class="fa-solid fa-upload"></i> Restore Data (JSON)
+                        <input type="file" id="import-backup-file" accept=".json" class="hidden">
+                    </label>
+
+                    <button id="reset-demo-data-btn" class="btn btn-text-danger btn-sm" title="Restore sample users and listings">
                         <i class="fa-solid fa-rotate-left"></i> Reset Demo Data
                     </button>
                 </div>
@@ -219,7 +245,7 @@
                 </button>
                 <div class="modal-header-banner">
                     <h2><i class="fa-solid fa-handshake"></i> Propose a Barter Deal</h2>
-                    <p>Select item(s) from your closet and optionally adjust with a Cash Top-Up to balance the trade.</p>
+                    <p>Select item(s) from your closet and optionally adjust with a Cash Top-Up (₦) to balance the trade.</p>
                 </div>
 
                 <div class="trade-builder-grid">
@@ -261,9 +287,9 @@
                         <div class="cash-topup-section">
                             <div class="cash-topup-header">
                                 <label class="section-label">
-                                    <i class="fa-solid fa-money-bill-wave"></i> 2. Cash Top-Up (Value Balancer):
+                                    <i class="fa-solid fa-money-bill-wave"></i> 2. Cash Top-Up (Naira ₦ Balancer):
                                 </label>
-                                <span class="delta-calculator-badge" id="trade-value-delta-badge">Value Delta: $0</span>
+                                <span class="delta-calculator-badge" id="trade-value-delta-badge">Value Delta: ₦0</span>
                             </div>
 
                             <div class="topup-options-group">
@@ -283,8 +309,8 @@
                                 </div>
 
                                 <div class="topup-input-row hidden" id="topup-amount-container">
-                                    <span class="currency-symbol">$</span>
-                                    <input type="number" id="topup-amount-input" min="0" max="5000" step="5" value="0" placeholder="Amount (e.g. 50)">
+                                    <span class="currency-symbol">₦</span>
+                                    <input type="number" id="topup-amount-input" min="0" max="1000000" step="500" value="0" placeholder="Amount (e.g. 15000)">
                                     <span class="topup-hint-text" id="topup-hint">Cash will be added to your offer.</span>
                                 </div>
                             </div>
@@ -293,7 +319,7 @@
                         <!-- OFFER MESSAGE -->
                         <div class="offer-note-section">
                             <label for="trade-note-input" class="section-label">3. Message to Owner:</label>
-                            <textarea id="trade-note-input" rows="3" placeholder="Explain why this trade is a great fit, offer meet-up suggestions, etc."></textarea>
+                            <textarea id="trade-note-input" rows="3" placeholder="Explain why this trade is a great fit, suggest a convenient meet-up spot in town..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -301,7 +327,7 @@
                 <!-- TRADE BUILDER FOOTER -->
                 <div class="trade-builder-footer">
                     <div class="trade-summary-pill" id="trade-builder-summary">
-                        Total Offer Value: <strong>$0</strong> vs Target Value: <strong>$0</strong>
+                        Total Offer Value: <strong>₦0</strong> vs Target Value: <strong>₦0</strong>
                     </div>
                     <div class="footer-btn-group">
                         <button class="btn btn-secondary" data-close-modal="trade-builder-modal">Cancel</button>
@@ -382,7 +408,7 @@
                     <i class="fa-solid fa-shield-halved safety-icon"></i>
                     <div>
                         <strong>Safe P2P Exchange Tips:</strong>
-                        <span>Meet in a public, well-lit place (e.g. coffee shop, shopping center). Inspect items before swapping. Cash top-ups are paid in person upon exchange.</span>
+                        <span>Meet in a public, well-lit place (e.g. coffee shop, shopping mall, bank entrance). Inspect items thoroughly before swapping. Cash top-ups (₦) are paid in person upon exchange.</span>
                     </div>
                 </div>
 
@@ -414,14 +440,14 @@
                 </button>
 
                 <div class="modal-title-box">
-                    <h2><i class="fa-solid fa-box-archive"></i> List an Item for Barter</h2>
+                    <h2><i class="fa-solid fa-box-archive"></i> Barter an item</h2>
                     <p>Post a physical item you own to start receiving swap offers from others.</p>
                 </div>
 
                 <form id="add-item-form" class="modal-form">
                     <div class="form-group">
                         <label for="item-title-input">Item Title <span class="required">*</span></label>
-                        <input type="text" id="item-title-input" required placeholder="e.g. Sony WH-1000XM4 Wireless Headphones">
+                        <input type="text" id="item-title-input" required placeholder="e.g. Century 3.5kVA Silent Generator">
                     </div>
 
                     <div class="form-row">
@@ -432,7 +458,6 @@
                                 <option value="Vintage & Fashion">Vintage & Fashion</option>
                                 <option value="Gaming & Tech">Gaming & Tech</option>
                                 <option value="Music & Audio">Music & Audio</option>
-                                <option value="Sports & Outdoor">Sports & Outdoor</option>
                                 <option value="Home & Tools">Home & Tools</option>
                             </select>
                         </div>
@@ -450,13 +475,13 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="item-value-input">Estimated Value ($ USD) <span class="required">*</span></label>
-                            <input type="number" id="item-value-input" required min="1" max="10000" step="5" placeholder="e.g. 150">
+                            <label for="item-value-input">Estimated Value (Naira ₦) <span class="required">*</span></label>
+                            <input type="number" id="item-value-input" required min="100" max="10000000" step="500" placeholder="e.g. 140000">
                         </div>
 
                         <div class="form-group">
                             <label for="item-location-input">Location / City <span class="required">*</span></label>
-                            <input type="text" id="item-location-input" required placeholder="e.g. Brooklyn, NY">
+                            <input type="text" id="item-location-input" required placeholder="e.g. Yaba, Lagos">
                         </div>
                     </div>
 
@@ -479,7 +504,7 @@
 
                     <div class="form-group">
                         <label for="item-wishlist-input">Barter Wishlist ("What do you want in exchange?")</label>
-                        <input type="text" id="item-wishlist-input" placeholder="e.g. Looking for mechanical keyboards, camera lenses, or denim jackets">
+                        <input type="text" id="item-wishlist-input" placeholder="e.g. Looking for refrigerators, vintage phones, or keyboards">
                     </div>
 
                     <div class="form-group checkbox-group">

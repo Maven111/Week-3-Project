@@ -1,6 +1,6 @@
 /* ==========================================================================
-   BUY BY BARTER - Core Application Logic
-   Peer-to-Peer Physical Item Exchange & Cash Top-Up Platform
+   BUY BY BARTER NIGERIA - Core Application Logic (V2)
+   Nigerian Peer-to-Peer Physical Item Exchange & Cash Top-Up (₦) Platform
    ========================================================================== */
 
 (function () {
@@ -8,223 +8,283 @@
 
     // LOCAL STORAGE KEYS
     const STORAGE_KEYS = {
-        USERS: 'bbb_users_v1',
-        ITEMS: 'bbb_items_v1',
-        OFFERS: 'bbb_offers_v1',
-        MESSAGES: 'bbb_messages_v1',
-        ACTIVE_USER: 'bbb_active_user_v1'
+        USERS: 'bbb_users_v2',
+        ITEMS: 'bbb_items_v2',
+        OFFERS: 'bbb_offers_v2',
+        MESSAGES: 'bbb_messages_v2',
+        ACTIVE_USER: 'bbb_active_user_v2',
+        THEME: 'bbb_theme_v2'
     };
 
     // HIGH-QUALITY PRESET IMAGE URLS FOR CLEAN DEMO LISTINGS
     const PRESET_IMAGES = [
+        { name: 'Nokia 3310 Phone', url: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Sony Walkman Phone', url: 'https://images.unsplash.com/photo-1546054454-aa26e2b734c7?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Teak Dining Set', url: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Generator', url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Double Door Fridge', url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80' },
         { name: 'Headphones', url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80' },
         { name: 'Film Camera', url: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80' },
         { name: 'Keyboard', url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=80' },
         { name: 'Dumbbells', url: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=600&q=80' },
-        { name: 'Guitar', url: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Electric Guitar', url: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=600&q=80' },
         { name: 'Gaming Console', url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80' },
-        { name: 'Denim Jacket', url: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80' },
-        { name: 'Record Player', url: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80' }
+        { name: 'Aso-Oke Vintage', url: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80' }
     ];
 
-    // INITIAL PRE-SEEDED DATASET
+    // NIGERIAN PERSONA USERS
     const INITIAL_USERS = [
         {
-            id: 'usr_alex',
-            name: 'Alex Rivera',
-            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
-            bio: 'Tech enthusiast, mechanical keyboard builder, and audiophile.',
-            location: 'Brooklyn, NY'
+            id: 'usr_tunde',
+            name: 'Tunde Bakare',
+            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+            bio: 'Tech entrepreneur, mechanical keyboard builder, & vintage gadget enthusiast.',
+            location: 'Yaba, Lagos'
         },
         {
-            id: 'usr_maya',
-            name: 'Maya Lin',
-            avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
-            bio: 'Vintage fashion collector and analog camera hobbyist.',
-            location: 'Manhattan, NY'
+            id: 'usr_amina',
+            name: 'Amina Bello',
+            avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=150&q=80',
+            bio: 'Vintage fashion curator, analog camera lover, & retro tech collector.',
+            location: 'Wuse II, Abuja'
         },
         {
-            id: 'usr_sam',
-            name: 'Sam Taylor',
-            avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80',
-            bio: 'Fitness fanatic & outdoor camping enthusiast.',
-            location: 'Queens, NY'
+            id: 'usr_chidi',
+            name: 'Chidi Okonkwo',
+            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+            bio: 'Software engineer, smart home enthusiast, & power backup expert.',
+            location: 'Lekki Phase 1, Lagos'
         },
         {
-            id: 'usr_elena',
-            name: 'Elena Rostova',
+            id: 'usr_funke',
+            name: 'Funke Akindele',
             avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
-            bio: 'Musician, indie record lover, and vinyl collector.',
-            location: 'Jersey City, NJ'
+            bio: 'Interior designer, high-end furniture collector, & afrobeat vinyl enthusiast.',
+            location: 'Bodija, Ibadan'
         }
     ];
 
+    // NIGERIAN CENTRIC ITEMS & VALUATIONS (IN NAIRA ₦)
     const INITIAL_ITEMS = [
+        // --- VINTAGE & FASHION ---
         {
-            id: 'item_1',
-            ownerId: 'usr_alex',
-            title: 'Sony WH-1000XM4 Wireless Headphones',
-            category: 'Electronics',
-            condition: 'Like New',
-            estimatedValue: 180,
-            location: 'Brooklyn, NY',
-            imageUrl: PRESET_IMAGES[0].url,
-            description: 'Industry-leading noise cancelling wireless headphones. Mint condition, includes original carrying case, USB-C charging cable, and audio jack.',
-            wishlist: 'Looking for mechanical keyboards, retro cameras, or guitar pedals.',
-            allowTopUp: true,
-            status: 'available',
-            createdAt: '2026-08-28T10:00:00Z'
-        },
-        {
-            id: 'item_2',
-            ownerId: 'usr_maya',
-            title: 'Canon AE-1 Program 35mm Vintage Camera',
+            id: 'item_vintage_1',
+            ownerId: 'usr_amina',
+            title: 'Nokia 3310 Classic Vintage Cellphone (Original)',
             category: 'Vintage & Fashion',
             condition: 'Good',
-            estimatedValue: 220,
-            location: 'Manhattan, NY',
-            imageUrl: PRESET_IMAGES[1].url,
-            description: 'Classic 1980s 35mm SLR film camera with Canon 50mm f/1.8 FD lens. Tested with film, light meter works perfectly. Comes with vintage leather strap.',
-            wishlist: 'Looking for wireless noise-cancelling headphones or Nintendo Switch OLED.',
+            estimatedValue: 25000,
+            location: 'Wuse II, Abuja',
+            distanceKm: 3.5,
+            imageUrl: PRESET_IMAGES[0].url,
+            description: 'Original legendary Nokia 3310 in dark navy blue. Working condition with battery and charger. Plays Snake II perfectly!',
+            wishlist: 'Looking for mechanical keyboard or vintage audio accessories.',
             allowTopUp: true,
             status: 'available',
-            createdAt: '2026-08-28T11:30:00Z'
+            createdAt: '2026-08-29T08:00:00Z'
         },
         {
-            id: 'item_3',
-            ownerId: 'usr_alex',
-            title: 'Keychron K2 Wireless Mechanical Keyboard',
-            category: 'Gaming & Tech',
-            condition: 'Brand New',
-            estimatedValue: 110,
-            location: 'Brooklyn, NY',
-            imageUrl: PRESET_IMAGES[2].url,
-            description: 'RGB Backlit Gateron Brown Tactile Switches. Aluminum frame, Bluetooth 5.1 & wired mode. Complete in original box with keycap puller.',
-            wishlist: 'Looking for denim jackets, vintage vinyl, or camping gear.',
-            allowTopUp: true,
-            status: 'available',
-            createdAt: '2026-08-28T12:15:00Z'
-        },
-        {
-            id: 'item_4',
-            ownerId: 'usr_sam',
-            title: 'Bowflex SelectTech Adjustable Dumbbells (Pair)',
-            category: 'Sports & Outdoor',
-            condition: 'Good',
-            estimatedValue: 175,
-            location: 'Queens, NY',
-            imageUrl: PRESET_IMAGES[3].url,
-            description: 'Adjustable dumbbells from 5 to 52.5 lbs each. Smooth dial selector system. Perfect for home workouts, saves tons of space.',
-            wishlist: 'Looking for camping gear, electric guitars, or high-end headphones.',
-            allowTopUp: true,
-            status: 'available',
-            createdAt: '2026-08-28T13:00:00Z'
-        },
-        {
-            id: 'item_5',
-            ownerId: 'usr_elena',
-            title: 'Fender Squier Stratocaster Electric Guitar',
-            category: 'Music & Audio',
+            id: 'item_vintage_2',
+            ownerId: 'usr_tunde',
+            title: 'Sony Ericsson Walkman W810i Slider Phone',
+            category: 'Vintage & Fashion',
             condition: 'Like New',
-            estimatedValue: 195,
-            location: 'Jersey City, NJ',
-            imageUrl: PRESET_IMAGES[4].url,
-            description: 'Sunburst finish with maple neck. Tuned and set up with fresh D’Addario strings. Includes padded guitar gig bag and guitar strap.',
-            wishlist: 'Looking for adjustable dumbbells, turntables, or Nintendo Switch.',
+            estimatedValue: 30000,
+            location: 'Yaba, Lagos',
+            distanceKm: 2.0,
+            imageUrl: PRESET_IMAGES[1].url,
+            description: 'Retro 2006 Walkman music phone with original orange earphones and Memory Stick PRO Duo. Rare collector’s condition.',
+            wishlist: 'Looking for noise-cancelling headphones or vintage vinyl turntable.',
             allowTopUp: true,
             status: 'available',
-            createdAt: '2026-08-28T14:20:00Z'
+            createdAt: '2026-08-29T08:30:00Z'
         },
         {
-            id: 'item_6',
-            ownerId: 'usr_alex',
+            id: 'item_vintage_3',
+            ownerId: 'usr_funke',
+            title: 'Authentic Handwoven Vintage Aso-Oke Agbada Set',
+            category: 'Vintage & Fashion',
+            condition: 'Like New',
+            estimatedValue: 65000,
+            location: 'Bodija, Ibadan',
+            distanceKm: 12.0,
+            imageUrl: PRESET_IMAGES[11].url,
+            description: 'Heavy authentic handwoven vintage Aso-Oke 3-piece Agbada attire with intricate embroidery. Worn once for a high-profile cultural gala.',
+            wishlist: 'Looking for dining table set, record player, or generator + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T09:00:00Z'
+        },
+        {
+            id: 'item_vintage_4',
+            ownerId: 'usr_amina',
+            title: 'Canon AE-1 Program 35mm Vintage Film Camera',
+            category: 'Vintage & Fashion',
+            condition: 'Good',
+            estimatedValue: 115000,
+            location: 'Wuse II, Abuja',
+            distanceKm: 4.2,
+            imageUrl: PRESET_IMAGES[6].url,
+            description: 'Classic 1980s 35mm SLR film camera with Canon 50mm f/1.8 FD lens. Tested with film, light meter works perfectly.',
+            wishlist: 'Looking for wireless noise-cancelling headphones or Nintendo Switch.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T09:15:00Z'
+        },
+
+        // --- HOME & TOOLS (INCLUDES FURNITURE & WORKOUT GEAR) ---
+        {
+            id: 'item_home_1',
+            ownerId: 'usr_funke',
+            title: 'Royal Teak Wood 6-Seater Dining Table Set',
+            category: 'Home & Tools',
+            condition: 'Like New',
+            estimatedValue: 180000,
+            location: 'Bodija, Ibadan',
+            distanceKm: 11.5,
+            imageUrl: PRESET_IMAGES[2].url,
+            description: 'Solid handcrafted teak wood dining table with 6 matching cushioned chairs. Rich mahogany finish, pristine condition.',
+            wishlist: 'Looking for double door fridge, electric guitar, or PS4 console + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T09:30:00Z'
+        },
+        {
+            id: 'item_home_2',
+            ownerId: 'usr_chidi',
+            title: 'Century 3.5kVA Key-Start Silent Generator',
+            category: 'Home & Tools',
+            condition: 'Like New',
+            estimatedValue: 140000,
+            location: 'Lekki Phase 1, Lagos',
+            distanceKm: 6.8,
+            imageUrl: PRESET_IMAGES[3].url,
+            description: '100% copper coil 3.5kVA generator with automatic key start. Easily powers 1.5HP AC, fridge, TV, and lighting. Low fuel consumption.',
+            wishlist: 'Looking for Sony headphones, mechanical keyboards, or gaming console.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T09:45:00Z'
+        },
+        {
+            id: 'item_home_3',
+            ownerId: 'usr_chidi',
+            title: 'Scanfrost 250L Double Door Refrigerator',
+            category: 'Home & Tools',
+            condition: 'Good',
+            estimatedValue: 165000,
+            location: 'Lekki Phase 1, Lagos',
+            distanceKm: 7.2,
+            imageUrl: PRESET_IMAGES[4].url,
+            description: 'Inverter technology double door fridge with fast cooling and deep freezer compartment. Clean interior, low power draw.',
+            wishlist: 'Looking for dining set or generator + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T10:00:00Z'
+        },
+        {
+            id: 'item_home_4',
+            ownerId: 'usr_tunde',
+            title: 'Bowflex SelectTech Adjustable Dumbbells Set',
+            category: 'Home & Tools',
+            condition: 'Good',
+            estimatedValue: 95000,
+            location: 'Yaba, Lagos',
+            distanceKm: 1.5,
+            imageUrl: PRESET_IMAGES[8].url,
+            description: 'Adjustable dumbbells pair from 5 to 52.5 lbs each. Dial weight selector system. Great home gym equipment.',
+            wishlist: 'Looking for generator, mechanical keyboards, or retro phones.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T10:15:00Z'
+        },
+
+        // --- ELECTRONICS ---
+        {
+            id: 'item_elec_1',
+            ownerId: 'usr_tunde',
+            title: 'Sony WH-1000XM4 Noise Cancelling Headphones',
+            category: 'Electronics',
+            condition: 'Like New',
+            estimatedValue: 185000,
+            location: 'Yaba, Lagos',
+            distanceKm: 1.8,
+            imageUrl: PRESET_IMAGES[5].url,
+            description: 'Industry-leading noise cancelling headphones. Complete in carrying case with audio jack and USB-C charger.',
+            wishlist: 'Looking for Century generator, mechanical keyboards, or vintage camera.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T10:30:00Z'
+        },
+        {
+            id: 'item_elec_2',
+            ownerId: 'usr_tunde',
+            title: 'Keychron K2 Wireless RGB Mechanical Keyboard',
+            category: 'Electronics',
+            condition: 'Brand New',
+            estimatedValue: 75000,
+            location: 'Yaba, Lagos',
+            distanceKm: 2.1,
+            imageUrl: PRESET_IMAGES[7].url,
+            description: 'Gateron Brown tactile switches with aluminum frame. Bluetooth 5.1 & wired USB-C mode. Sealed in original box.',
+            wishlist: 'Looking for Nokia 3310 vintage phone, dumbbells, or Aso-Oke agbada.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T10:45:00Z'
+        },
+
+        // --- GAMING & TECH ---
+        {
+            id: 'item_game_1',
+            ownerId: 'usr_tunde',
             title: 'Nintendo Switch OLED Model (White)',
             category: 'Gaming & Tech',
             condition: 'Like New',
-            estimatedValue: 275,
-            location: 'Brooklyn, NY',
-            imageUrl: PRESET_IMAGES[5].url,
-            description: 'Vibrant 7-inch OLED screen edition. Comes with white Joy-Cons, dock, HDMI cable, power adapter, and carrying case. Screen protector installed since day 1.',
-            wishlist: 'Looking for vintage film cameras or electric guitar + cash top up.',
+            estimatedValue: 260000,
+            location: 'Yaba, Lagos',
+            distanceKm: 2.4,
+            imageUrl: PRESET_IMAGES[10].url,
+            description: 'Vibrant 7-inch OLED screen edition. Comes with white Joy-Cons, dock, HDMI, power adapter, and carrying case.',
+            wishlist: 'Looking for dining set or double door fridge + cash top up.',
             allowTopUp: true,
             status: 'available',
-            createdAt: '2026-08-28T15:45:00Z'
+            createdAt: '2026-08-29T11:00:00Z'
         },
+
+        // --- MUSIC & AUDIO ---
         {
-            id: 'item_7',
-            ownerId: 'usr_maya',
-            title: 'Levi’s Vintage Sherpa Trucker Denim Jacket',
-            category: 'Vintage & Fashion',
-            condition: 'Like New',
-            estimatedValue: 95,
-            location: 'Manhattan, NY',
-            imageUrl: PRESET_IMAGES[6].url,
-            description: 'Classic medium wash denim trucker jacket with cozy warm sherpa lining. Unisex Size M. Barely worn, immaculate stitching.',
-            wishlist: 'Looking for mechanical keyboard, vinyl record player, or audio gear.',
-            allowTopUp: true,
-            status: 'available',
-            createdAt: '2026-08-28T16:10:00Z'
-        },
-        {
-            id: 'item_8',
-            ownerId: 'usr_elena',
-            title: 'Audio-Technica AT-LP60X Bluetooth Turntable',
+            id: 'item_music_1',
+            ownerId: 'usr_funke',
+            title: 'Fender Squier Stratocaster Electric Guitar',
             category: 'Music & Audio',
-            condition: 'Good',
-            estimatedValue: 135,
-            location: 'Jersey City, NJ',
-            imageUrl: PRESET_IMAGES[7].url,
-            description: 'Fully automatic belt-drive stereo turntable with wireless Bluetooth connectivity and built-in phono preamp. Crystal clear vinyl sound.',
-            wishlist: 'Looking for denim jacket or mechanical keyboard.',
+            condition: 'Like New',
+            estimatedValue: 135000,
+            location: 'Bodija, Ibadan',
+            distanceKm: 13.0,
+            imageUrl: PRESET_IMAGES[9].url,
+            description: 'Sunburst finish with maple neck. Tuned and set up with fresh D’Addario strings. Includes padded gig bag.',
+            wishlist: 'Looking for Scanfrost fridge, generator, or vintage turntable.',
             allowTopUp: true,
             status: 'available',
-            createdAt: '2026-08-28T17:00:00Z'
+            createdAt: '2026-08-29T11:15:00Z'
         }
     ];
 
     const INITIAL_OFFERS = [
         {
             id: 'off_sample_1',
-            targetItemId: 'item_1', // Alex's Headphones ($180)
-            targetOwnerId: 'usr_alex',
-            offeredByUserId: 'usr_maya',
-            offeredItemIds: ['item_7'], // Maya's Denim Jacket ($95)
-            cashTopUp: 85, // Maya offers +$85 cash to balance the $180 - $95 = $85 gap!
+            targetItemId: 'item_elec_1', // Tunde's Sony Headphones (₦185,000)
+            targetOwnerId: 'usr_tunde',
+            offeredByUserId: 'usr_amina',
+            offeredItemIds: ['item_vintage_1'], // Amina's Nokia 3310 (₦25,000)
+            cashTopUp: 160000, // Amina offers ₦160,000 cash top up!
             cashDirection: 'offer',
-            note: 'Hey Alex! I love your Sony headphones. Offering my Levi Sherpa jacket plus $85 cash top-up to match your $180 valuation. Let me know!',
+            note: 'Hello Tunde! Offering my rare vintage Nokia 3310 plus ₦160,000 cash top-up for your Sony headphones. Can meet at Yaba Tech gate!',
             status: 'pending',
-            createdAt: '2026-08-28T18:00:00Z'
-        },
-        {
-            id: 'off_sample_2',
-            targetItemId: 'item_5', // Elena's Guitar ($195)
-            targetOwnerId: 'usr_elena',
-            offeredByUserId: 'usr_sam',
-            offeredItemIds: ['item_4'], // Sam's Dumbbells ($175)
-            cashTopUp: 20, // Sam offers +$20 cash
-            cashDirection: 'offer',
-            note: 'Hi Elena! I would love to trade my Bowflex adjustable dumbbells for your Fender Stratocaster. Adding $20 cash top up for the small delta!',
-            status: 'accepted',
-            createdAt: '2026-08-28T19:30:00Z'
+            createdAt: '2026-08-29T11:30:00Z'
         }
     ];
 
-    const INITIAL_MESSAGES = [
-        {
-            id: 'msg_1',
-            offerId: 'off_sample_2',
-            senderId: 'usr_sam',
-            text: 'Hey Elena! Thanks for accepting the trade proposal. Are you free to meet up near Washington Square Park tomorrow around 2 PM?',
-            timestamp: '2026-08-28T19:35:00Z'
-        },
-        {
-            id: 'msg_2',
-            offerId: 'off_sample_2',
-            senderId: 'usr_elena',
-            text: 'Sounds great Sam! Tomorrow at 2 PM works. I will bring the guitar in its gig bag along with the strap. I can test the dumbbells on spot!',
-            timestamp: '2026-08-28T19:40:00Z'
-        }
-    ];
+    const INITIAL_MESSAGES = [];
 
     // APPLICATION STATE
     let state = {
@@ -232,12 +292,14 @@
         items: [],
         offers: [],
         messages: [],
-        activeUserId: 'usr_alex',
+        activeUserId: 'usr_tunde',
+        theme: 'light', // 'light' (default) | 'dark'
         currentView: 'marketplace', // 'marketplace' | 'closet'
         searchQuery: '',
         activeCategory: 'all',
+        maxDistanceKm: 'all', // 'all' | '3' | '5' | '10' | '25'
         topUpFilter: 'all', // 'all' | 'topup' | 'straight'
-        sortBy: 'newest', // 'newest' | 'value-desc' | 'value-asc' | 'popular'
+        sortBy: 'newest', // 'newest' | 'value-desc' | 'value-asc' | 'distance'
         selectedTargetItem: null,
         selectedOfferItemIds: [],
         activeChatOfferId: null
@@ -246,12 +308,16 @@
     // DOM ELEMENTS CACHE
     const DOM = {
         appRoot: document.getElementById('app-root'),
+        themeToggleBtn: document.getElementById('theme-toggle-btn'),
+        themeIcon: document.getElementById('theme-icon'),
+        themeText: document.getElementById('theme-text'),
         userPersonaSelect: document.getElementById('user-persona-select'),
         activePersonaAvatar: document.getElementById('active-persona-avatar'),
         activePersonaName: document.getElementById('active-persona-name'),
         searchInput: document.getElementById('search-input'),
         clearSearchBtn: document.getElementById('clear-search'),
         categoryPillsContainer: document.getElementById('category-pills-container'),
+        distanceFilterSelect: document.getElementById('distance-filter'),
         topUpFilterSelect: document.getElementById('topup-filter'),
         sortSelect: document.getElementById('sort-select'),
         listingsGrid: document.getElementById('listings-grid'),
@@ -270,6 +336,8 @@
         openAddItemModalBtn: document.getElementById('open-add-item-modal-btn'),
         brandLogoBtn: document.getElementById('brand-logo-btn'),
         resetDemoDataBtn: document.getElementById('reset-demo-data-btn'),
+        exportBackupBtn: document.getElementById('export-backup-btn'),
+        importBackupFile: document.getElementById('import-backup-file'),
         
         // Modals
         itemDetailModal: document.getElementById('item-detail-modal'),
@@ -324,6 +392,7 @@
        ========================================================================== */
     function initApp() {
         loadState();
+        applyTheme();
         setupUserPersonaDropdown();
         setupPresetImagesPicker();
         bindEvents();
@@ -337,6 +406,9 @@
             const offersData = localStorage.getItem(STORAGE_KEYS.OFFERS);
             const messagesData = localStorage.getItem(STORAGE_KEYS.MESSAGES);
             const activeUser = localStorage.getItem(STORAGE_KEYS.ACTIVE_USER);
+            const theme = localStorage.getItem(STORAGE_KEYS.THEME);
+
+            if (theme) state.theme = theme;
 
             if (usersData && itemsData && offersData) {
                 state.users = JSON.parse(usersData);
@@ -345,12 +417,11 @@
                 state.messages = messagesData ? JSON.parse(messagesData) : [];
                 if (activeUser) state.activeUserId = activeUser;
             } else {
-                // Seed initial data
                 state.users = INITIAL_USERS;
                 state.items = INITIAL_ITEMS;
                 state.offers = INITIAL_OFFERS;
                 state.messages = INITIAL_MESSAGES;
-                state.activeUserId = 'usr_alex';
+                state.activeUserId = 'usr_tunde';
                 saveState();
             }
         } catch (e) {
@@ -359,7 +430,7 @@
             state.items = INITIAL_ITEMS;
             state.offers = INITIAL_OFFERS;
             state.messages = INITIAL_MESSAGES;
-            state.activeUserId = 'usr_alex';
+            state.activeUserId = 'usr_tunde';
         }
     }
 
@@ -370,9 +441,29 @@
             localStorage.setItem(STORAGE_KEYS.OFFERS, JSON.stringify(state.offers));
             localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(state.messages));
             localStorage.setItem(STORAGE_KEYS.ACTIVE_USER, state.activeUserId);
+            localStorage.setItem(STORAGE_KEYS.THEME, state.theme);
         } catch (e) {
             console.error('Error saving state to LocalStorage:', e);
         }
+    }
+
+    function applyTheme() {
+        if (state.theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            DOM.themeIcon.className = 'fa-solid fa-moon';
+            DOM.themeText.textContent = 'Dark';
+        } else {
+            document.body.classList.remove('dark-theme');
+            DOM.themeIcon.className = 'fa-solid fa-sun';
+            DOM.themeText.textContent = 'Light';
+        }
+    }
+
+    function toggleTheme() {
+        state.theme = state.theme === 'light' ? 'dark' : 'light';
+        saveState();
+        applyTheme();
+        showToast(`Switched to ${state.theme.toUpperCase()} mode`, 'info');
     }
 
     function resetDemoData() {
@@ -386,12 +477,68 @@
         state.items = INITIAL_ITEMS;
         state.offers = INITIAL_OFFERS;
         state.messages = INITIAL_MESSAGES;
-        state.activeUserId = 'usr_alex';
+        state.activeUserId = 'usr_tunde';
         saveState();
 
-        showToast('Demo data restored to initial state!', 'success');
+        showToast('Demo data restored to Nigerian initial state!', 'success');
         setupUserPersonaDropdown();
         render();
+    }
+
+    /* ==========================================================================
+       DATA BACKUP & RESTORE MODULE (JSON EXPORT/IMPORT)
+       ========================================================================== */
+    function exportDataToJson() {
+        const backupData = {
+            app: 'BuyByBarterNigeria',
+            version: '2.0',
+            exportedAt: new Date().toISOString(),
+            users: state.users,
+            items: state.items,
+            offers: state.offers,
+            messages: state.messages
+        };
+
+        const jsonString = JSON.stringify(backupData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `buy_by_barter_backup_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast('Backup JSON downloaded successfully!', 'success');
+    }
+
+    function importDataFromJson(file) {
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            try {
+                const parsed = JSON.parse(e.target.result);
+                if (parsed.items && Array.isArray(parsed.items) && parsed.users && Array.isArray(parsed.users)) {
+                    state.users = parsed.users;
+                    state.items = parsed.items;
+                    state.offers = parsed.offers || [];
+                    state.messages = parsed.messages || [];
+                    saveState();
+
+                    setupUserPersonaDropdown();
+                    render();
+                    showToast('Barter database successfully restored from JSON!', 'success');
+                } else {
+                    alert('Invalid backup file format.');
+                }
+            } catch (err) {
+                alert('Error parsing JSON backup file: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
     }
 
     /* ==========================================================================
@@ -433,6 +580,9 @@
        EVENT BINDINGS
        ========================================================================== */
     function bindEvents() {
+        // Theme Toggle
+        DOM.themeToggleBtn.addEventListener('click', toggleTheme);
+
         // User Persona Change
         DOM.userPersonaSelect.addEventListener('change', (e) => {
             state.activeUserId = e.target.value;
@@ -487,6 +637,11 @@
         });
 
         // Filters & Sort
+        DOM.distanceFilterSelect.addEventListener('change', (e) => {
+            state.maxDistanceKm = e.target.value;
+            renderListings();
+        });
+
         DOM.topUpFilterSelect.addEventListener('change', (e) => {
             state.topUpFilter = e.target.value;
             renderListings();
@@ -501,13 +656,22 @@
             state.searchQuery = '';
             state.activeCategory = 'all';
             state.topUpFilter = 'all';
+            state.maxDistanceKm = 'all';
             DOM.searchInput.value = '';
             DOM.clearSearchBtn.classList.add('hidden');
             DOM.topUpFilterSelect.value = 'all';
+            DOM.distanceFilterSelect.value = 'all';
             DOM.categoryPillsContainer.querySelectorAll('.pill-btn').forEach(b => {
                 b.classList.toggle('active', b.dataset.category === 'all');
             });
             renderListings();
+        });
+
+        // Backup & Restore
+        DOM.exportBackupBtn.addEventListener('click', exportDataToJson);
+        DOM.importBackupFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) importDataFromJson(file);
         });
 
         // Modals Open / Close handlers
@@ -518,7 +682,7 @@
         });
 
         DOM.resetDemoDataBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to reset all demo items, users, and offers?')) {
+            if (confirm('Are you sure you want to reset all demo items, users, and offers to Nigerian baseline?')) {
                 resetDemoData();
             }
         });
@@ -550,7 +714,7 @@
 
         // Inbox Tabs
         document.querySelectorAll('.inbox-tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.inbox-tab-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 
@@ -602,14 +766,17 @@
             if (state.currentView === 'closet' && item.ownerId !== state.activeUserId) {
                 return false;
             }
-            if (state.currentView === 'marketplace' && item.ownerId === state.activeUserId) {
-                // In marketplace mode, show everything or exclude owned if desired.
-                // We show all items, highlighting owned ones.
-            }
 
             // Category filter
             if (state.activeCategory !== 'all' && item.category !== state.activeCategory) {
                 return false;
+            }
+
+            // Proximity filter
+            if (state.maxDistanceKm !== 'all') {
+                const maxD = parseFloat(state.maxDistanceKm);
+                const dist = item.distanceKm || 5.0;
+                if (dist > maxD) return false;
             }
 
             // Top up filter
@@ -631,6 +798,7 @@
             if (state.sortBy === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
             if (state.sortBy === 'value-desc') return b.estimatedValue - a.estimatedValue;
             if (state.sortBy === 'value-asc') return a.estimatedValue - b.estimatedValue;
+            if (state.sortBy === 'distance') return (a.distanceKm || 0) - (b.distanceKm || 0);
             return 0;
         });
     }
@@ -644,9 +812,9 @@
         if (filtered.length === 0) {
             DOM.emptyState.classList.remove('hidden');
             if (state.currentView === 'closet') {
-                DOM.emptyStateMsg.textContent = "Your closet is currently empty. Click 'List An Item' to add items you want to barter!";
+                DOM.emptyStateMsg.textContent = "Your closet is currently empty. Click 'Barter an item' to add items you want to trade!";
             } else {
-                DOM.emptyStateMsg.textContent = "No barter listings match your current search or category filter.";
+                DOM.emptyStateMsg.textContent = "No barter listings match your current search, distance, or category filter.";
             }
             return;
         } else {
@@ -668,11 +836,13 @@
 
         const topUpBadgeText = item.allowTopUp ? '💵 Accepts Top-Up' : '🔄 Straight Swap';
         const topUpClass = item.allowTopUp ? '' : 'straight-swap';
+        const formattedVal = '₦' + item.estimatedValue.toLocaleString();
+        const distText = item.distanceKm ? `📍 ${item.distanceKm} km away` : '';
 
         card.innerHTML = `
             <div class="card-image-wrapper">
                 <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" class="card-image" loading="lazy">
-                <span class="card-value-tag">Est. $${item.estimatedValue}</span>
+                <span class="card-value-tag">${formattedVal}</span>
                 <span class="card-topup-badge ${topUpClass}">${topUpBadgeText}</span>
             </div>
             <div class="card-body">
@@ -694,6 +864,7 @@
                         <div class="owner-details">
                             <span class="owner-name">${escapeHtml(owner.name)} ${isOwnedByMe ? '(You)' : ''}</span>
                             <span class="owner-location"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(item.location)}</span>
+                            ${distText ? `<span class="distance-badge">${distText}</span>` : ''}
                         </div>
                     </div>
 
@@ -712,13 +883,11 @@
             </div>
         `;
 
-        // Card Click opens Detail Modal (unless clicking action button)
         card.addEventListener('click', (e) => {
             if (e.target.closest('.card-actions')) return;
             openItemDetailModal(item);
         });
 
-        // Propose Trade Button
         const proposeBtn = card.querySelector('.propose-trade-btn');
         if (proposeBtn) {
             proposeBtn.addEventListener('click', (e) => {
@@ -727,7 +896,6 @@
             });
         }
 
-        // Delete Item Button
         const deleteBtn = card.querySelector('.edit-item-btn');
         if (deleteBtn) {
             deleteBtn.addEventListener('click', (e) => {
@@ -754,6 +922,7 @@
     function openItemDetailModal(item) {
         const owner = getUserById(item.ownerId);
         const isOwnedByMe = item.ownerId === state.activeUserId;
+        const formattedVal = '₦' + item.estimatedValue.toLocaleString();
 
         DOM.itemDetailContent.innerHTML = `
             <div class="detail-image-box">
@@ -767,22 +936,22 @@
                 <h2 class="detail-title">${escapeHtml(item.title)}</h2>
 
                 <div class="detail-price-box">
-                    <span class="detail-value">Estimated Value: $${item.estimatedValue}</span>
-                    <span class="detail-topup-status">${item.allowTopUp ? '💵 Cash Top-Up Allowed' : '🔄 Straight Swap Only'}</span>
+                    <span class="detail-value">Est. Value: ${formattedVal}</span>
+                    <span class="detail-topup-status">${item.allowTopUp ? '💵 Cash Top-Up (₦) Allowed' : '🔄 Straight Swap Only'}</span>
                 </div>
 
                 <p class="detail-desc">${escapeHtml(item.description)}</p>
 
                 <div class="detail-wishlist-box">
                     <span class="detail-wishlist-title"><i class="fa-solid fa-gift"></i> Owner's Swap Wishlist:</span>
-                    <p style="color: #cbd5e1; font-size: 0.9rem;">${escapeHtml(item.wishlist || 'Open to any fair value physical item proposal.')}</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.2rem;">${escapeHtml(item.wishlist || 'Open to any fair value physical item proposal.')}</p>
                 </div>
 
                 <div class="detail-owner-card">
                     <img src="${escapeHtml(owner.avatar)}" alt="${escapeHtml(owner.name)}" class="owner-avatar" style="width: 44px; height: 44px;">
                     <div>
-                        <strong style="color: #fff; font-size: 0.95rem;">Listed by ${escapeHtml(owner.name)} ${isOwnedByMe ? '(You)' : ''}</strong>
-                        <div style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(item.location)}</div>
+                        <strong style="font-size: 0.95rem;">Listed by ${escapeHtml(owner.name)} ${isOwnedByMe ? '(You)' : ''}</strong>
+                        <div style="font-size: 0.8rem; opacity: 0.8;"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(item.location)} • 📍 ${item.distanceKm || 5} km away</div>
                     </div>
                 </div>
 
@@ -819,24 +988,24 @@
         const owner = getUserById(targetItem.ownerId);
         DOM.builderTargetOwner.textContent = `Owner: ${owner.name}`;
 
-        // Render target item preview
+        const formattedVal = '₦' + targetItem.estimatedValue.toLocaleString();
+
         DOM.builderTargetCard.innerHTML = `
             <img src="${escapeHtml(targetItem.imageUrl)}" alt="${escapeHtml(targetItem.title)}" class="target-img-thumb">
             <div class="target-item-details">
                 <span class="target-item-title">${escapeHtml(targetItem.title)}</span>
-                <span style="font-size: 0.75rem; color: #6366f1;">${escapeHtml(targetItem.category)} • ${escapeHtml(targetItem.condition)}</span>
-                <span class="target-item-val">Est. $${targetItem.estimatedValue}</span>
+                <span style="font-size: 0.75rem; color: #059669;">${escapeHtml(targetItem.category)} • ${escapeHtml(targetItem.condition)}</span>
+                <span class="target-item-val">${formattedVal}</span>
             </div>
         `;
 
-        // Render closet items of active user
         const myClosetItems = state.items.filter(i => i.ownerId === state.activeUserId && i.status === 'available');
         DOM.builderClosetPicker.innerHTML = '';
 
         if (myClosetItems.length === 0) {
             DOM.builderClosetPicker.innerHTML = `
-                <div style="padding: 1rem; text-align: center; color: #94a3b8; font-size: 0.85rem; background: rgba(30,41,59,0.3); border-radius: 8px;">
-                    <i class="fa-solid fa-info-circle"></i> You have no items in your closet. You can offer a <strong>Cash Top-Up</strong> only or list an item first!
+                <div style="padding: 1rem; text-align: center; color: #64748b; font-size: 0.85rem; background: rgba(0,0,0,0.03); border-radius: 8px;">
+                    <i class="fa-solid fa-info-circle"></i> You have no items in your closet. You can offer a <strong>Cash Top-Up (₦)</strong> only or list an item first!
                 </div>
             `;
         } else {
@@ -849,7 +1018,7 @@
                     <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" class="closet-pick-thumb">
                     <div class="closet-pick-info">
                         <span class="closet-pick-title">${escapeHtml(item.title)}</span>
-                        <span class="closet-pick-val">Est. $${item.estimatedValue}</span>
+                        <span class="closet-pick-val">₦${item.estimatedValue.toLocaleString()}</span>
                     </div>
                 `;
 
@@ -871,7 +1040,6 @@
             });
         }
 
-        // Reset inputs
         DOM.topUpNoneRadio.checked = true;
         DOM.topUpAmountInput.value = 0;
         DOM.topUpAmountContainer.classList.add('hidden');
@@ -886,7 +1054,6 @@
 
         const targetVal = state.selectedTargetItem.estimatedValue;
         
-        // Sum selected offered items
         let offeredItemsVal = 0;
         state.selectedOfferItemIds.forEach(id => {
             const item = getItemById(id);
@@ -902,32 +1069,28 @@
         let netOfferedValue = offeredItemsVal;
         if (direction === 'offer') {
             netOfferedValue += topUpVal;
-            DOM.topUpHint.textContent = `+$${topUpVal} cash will be paid by you upon meet-up.`;
+            DOM.topUpHint.textContent = `+₦${topUpVal.toLocaleString()} cash will be paid by you upon meet-up.`;
         } else if (direction === 'request') {
             netOfferedValue -= topUpVal;
-            DOM.topUpHint.textContent = `-$${topUpVal} cash requested from item owner upon meet-up.`;
+            DOM.topUpHint.textContent = `-₦${topUpVal.toLocaleString()} cash requested from item owner upon meet-up.`;
         }
 
         const delta = targetVal - offeredItemsVal;
         if (delta > 0) {
-            DOM.tradeValueDeltaBadge.textContent = `Value Gap: +$${delta} for target item`;
-            DOM.tradeValueDeltaBadge.style.color = '#f59e0b';
+            DOM.tradeValueDeltaBadge.textContent = `Value Gap: +₦${delta.toLocaleString()} for target item`;
         } else if (delta < 0) {
-            DOM.tradeValueDeltaBadge.textContent = `Value Gap: +$${Math.abs(delta)} for your offer`;
-            DOM.tradeValueDeltaBadge.style.color = '#10b981';
+            DOM.tradeValueDeltaBadge.textContent = `Value Gap: +₦${Math.abs(delta).toLocaleString()} for your offer`;
         } else {
-            DOM.tradeValueDeltaBadge.textContent = `Equal Estimated Value ($${targetVal})`;
-            DOM.tradeValueDeltaBadge.style.color = '#818cf8';
+            DOM.tradeValueDeltaBadge.textContent = `Equal Estimated Value (₦${targetVal.toLocaleString()})`;
         }
 
-        // Auto suggestion hint if topup radio changed first time
         if (direction === 'offer' && topUpVal === 0 && delta > 0) {
             DOM.topUpAmountInput.value = delta;
             netOfferedValue = offeredItemsVal + delta;
         }
 
         DOM.tradeBuilderSummary.innerHTML = `
-            Your Total Offer: <strong>$${netOfferedValue}</strong> (${offeredItemsVal} items + ${direction === 'offer' ? '$' + topUpVal + ' cash' : 'no cash'}) vs Target: <strong>$${targetVal}</strong>
+            Your Total Offer: <strong>₦${netOfferedValue.toLocaleString()}</strong> (${offeredItemsVal ? '₦' + offeredItemsVal.toLocaleString() + ' items' : 'No items'} + ${direction === 'offer' ? '₦' + topUpVal.toLocaleString() + ' cash' : 'no cash'}) vs Target: <strong>₦${targetVal.toLocaleString()}</strong>
         `;
     }
 
@@ -938,7 +1101,7 @@
         const cashAmount = parseFloat(DOM.topUpAmountInput.value) || 0;
 
         if (state.selectedOfferItemIds.length === 0 && (direction === 'none' || cashAmount <= 0)) {
-            alert('Please select at least 1 item from your closet OR add a Cash Top-Up amount to make an offer!');
+            alert('Please select at least 1 item from your closet OR add a Cash Top-Up (₦) amount to make an offer!');
             return;
         }
 
@@ -1049,9 +1212,9 @@
 
         let cashPillHtml = '';
         if (offer.cashDirection === 'offer' && offer.cashTopUp > 0) {
-            cashPillHtml = `<span class="cash-topup-pill">+ $${offer.cashTopUp} Cash Top-Up Paid By Offerer</span>`;
+            cashPillHtml = `<span class="cash-topup-pill">+ ₦${offer.cashTopUp.toLocaleString()} Cash Top-Up</span>`;
         } else if (offer.cashDirection === 'request' && offer.cashTopUp > 0) {
-            cashPillHtml = `<span class="cash-topup-pill">Requests $${offer.cashTopUp} Cash Top-Up</span>`;
+            cashPillHtml = `<span class="cash-topup-pill">Requests ₦${offer.cashTopUp.toLocaleString()} Cash Top-Up</span>`;
         }
 
         const isReceived = type === 'received';
@@ -1065,35 +1228,33 @@
                 <div class="offer-user-info">
                     <img src="${escapeHtml(displayUser.avatar)}" alt="${escapeHtml(displayUser.name)}" class="owner-avatar">
                     <div>
-                        <strong style="color: #fff;">${escapeHtml(displayUser.name)}</strong>
-                        <span style="font-size: 0.75rem; color: #94a3b8; margin-left: 0.3rem;">(${roleLabel})</span>
-                        <div style="font-size: 0.7rem; color: #64748b;">${new Date(offer.createdAt).toLocaleDateString()}</div>
+                        <strong>${escapeHtml(displayUser.name)}</strong>
+                        <span style="font-size: 0.75rem; opacity: 0.7; margin-left: 0.3rem;">(${roleLabel})</span>
+                        <div style="font-size: 0.7rem; opacity: 0.6;">${new Date(offer.createdAt).toLocaleDateString()}</div>
                     </div>
                 </div>
                 <span class="offer-status-badge ${statusClass}">${offer.status}</span>
             </div>
 
             <div class="offer-comparison-row">
-                <!-- Target Item -->
                 <div class="offer-side-item">
                     <img src="${escapeHtml(targetItem ? targetItem.imageUrl : '')}" alt="Target">
                     <div class="offer-item-meta">
                         <strong>${escapeHtml(targetItem ? targetItem.title : 'Item')}</strong>
-                        <span>Est. $${targetItem ? targetItem.estimatedValue : 0}</span>
+                        <span>Est. ₦${targetItem ? targetItem.estimatedValue.toLocaleString() : 0}</span>
                     </div>
                 </div>
 
-                <div style="text-align: center; color: #6366f1; font-weight: bold;">
+                <div style="text-align: center; color: #059669; font-weight: bold;">
                     <i class="fa-solid fa-arrow-right-arrow-left"></i>
                 </div>
 
-                <!-- Offered Item(s) -->
                 <div class="offer-side-item">
                     ${offeredItems.length > 0 ? `
                         <img src="${escapeHtml(offeredItems[0].imageUrl)}" alt="Offered">
                         <div class="offer-item-meta">
                             <strong>${escapeHtml(offeredItems.map(i => i.title).join(', '))}</strong>
-                            <span>Est. $${offeredItemsVal}</span>
+                            <span>Est. ₦${offeredItemsVal.toLocaleString()}</span>
                             ${cashPillHtml}
                         </div>
                     ` : `
@@ -1110,7 +1271,7 @@
             </div>
 
             <div class="offer-card-footer">
-                <span style="font-size: 0.8rem; color: #94a3b8;">Offer ID: ${offer.id}</span>
+                <span style="font-size: 0.8rem; opacity: 0.6;">Offer ID: ${offer.id}</span>
                 <div style="display: flex; gap: 0.5rem;">
                     ${isReceived && offer.status === 'pending' ? `
                         <button class="btn btn-danger btn-sm decline-offer-btn" data-id="${offer.id}">Decline</button>
@@ -1125,7 +1286,6 @@
             </div>
         `;
 
-        // Action Handlers
         const acceptBtn = card.querySelector('.accept-offer-btn');
         if (acceptBtn) {
             acceptBtn.addEventListener('click', () => handleAcceptOffer(offer.id));
@@ -1153,14 +1313,13 @@
 
         offer.status = 'accepted';
 
-        // Add automated notification message to chat thread if empty
         const existingMsgs = state.messages.filter(m => m.offerId === offerId);
         if (existingMsgs.length === 0) {
             state.messages.push({
                 id: 'msg_' + Date.now(),
                 offerId: offerId,
                 senderId: state.activeUserId,
-                text: `🎉 Trade proposal accepted! Let's arrange a convenient meet-up time and safe public place to exchange items.`,
+                text: `🎉 Trade proposal accepted! Let's arrange a convenient meet-up time and safe public place in town to exchange items.`,
                 timestamp: new Date().toISOString()
             });
         }
@@ -1204,7 +1363,7 @@
 
         let cashText = '';
         if (offer.cashDirection === 'offer' && offer.cashTopUp > 0) {
-            cashText = `+ $${offer.cashTopUp} Cash Top-Up`;
+            cashText = `+ ₦${offer.cashTopUp.toLocaleString()} Cash Top-Up`;
         }
 
         DOM.chatDealSummaryBox.innerHTML = `
@@ -1277,7 +1436,6 @@
         if (confirm('Mark this barter as successfully completed? Items will be archived as swapped.')) {
             offer.status = 'completed';
 
-            // Mark items as swapped
             const targetItem = getItemById(offer.targetItemId);
             if (targetItem) targetItem.status = 'swapped';
 
@@ -1324,7 +1482,6 @@
 
         DOM.itemImageUrl.value = PRESET_IMAGES[0].url;
 
-        // Custom File Upload reader
         DOM.itemFileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
@@ -1364,6 +1521,7 @@
             condition,
             estimatedValue,
             location,
+            distanceKm: Math.floor(Math.random() * 8) + 1,
             imageUrl,
             description,
             wishlist: wishlist || 'Open to all physical barter proposals',
@@ -1431,7 +1589,6 @@
             .replace(/'/g, '&#039;');
     }
 
-    // INITIALIZE APP ON DOM READY
     document.addEventListener('DOMContentLoaded', initApp);
 
 })();
