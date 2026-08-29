@@ -8,12 +8,12 @@
 
     // LOCAL STORAGE KEYS
     const STORAGE_KEYS = {
-        USERS: 'bbb_users_v2',
-        ITEMS: 'bbb_items_v2',
-        OFFERS: 'bbb_offers_v2',
-        MESSAGES: 'bbb_messages_v2',
-        ACTIVE_USER: 'bbb_active_user_v2',
-        THEME: 'bbb_theme_v2'
+        USERS: 'bbb_users_v3',
+        ITEMS: 'bbb_items_v3',
+        OFFERS: 'bbb_offers_v3',
+        MESSAGES: 'bbb_messages_v3',
+        ACTIVE_USER: 'bbb_active_user_v3',
+        THEME: 'bbb_theme_v3'
     };
 
     // HIGH-QUALITY PRESET IMAGE URLS FOR CLEAN DEMO LISTINGS
@@ -29,7 +29,11 @@
         { name: 'Dumbbells', url: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=600&q=80' },
         { name: 'Electric Guitar', url: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=600&q=80' },
         { name: 'Gaming Console', url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80' },
-        { name: 'Aso-Oke Vintage', url: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80' }
+        { name: 'Aso-Oke Vintage', url: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80' },
+        { name: 'PS5 Console', url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80' },
+        { name: 'PS4 Slim Console', url: 'https://images.unsplash.com/photo-1507457379470-08b800bebc67?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Racing Wheel', url: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80' },
+        { name: 'ASUS ROG Ally', url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80' }
     ];
 
     // NIGERIAN PERSONA USERS
@@ -248,6 +252,70 @@
             allowTopUp: true,
             status: 'available',
             createdAt: '2026-08-29T11:00:00Z'
+        },
+        {
+            id: 'item_game_2',
+            ownerId: 'usr_chidi',
+            title: 'PlayStation 5 Disc Edition + 2 DualSense Controllers',
+            category: 'Gaming & Tech',
+            condition: 'Like New',
+            estimatedValue: 580000,
+            location: 'Lekki Phase 1, Lagos',
+            distanceKm: 6.5,
+            imageUrl: PRESET_IMAGES[12].url,
+            description: 'Ultra-fast 825GB SSD PS5 Disc Edition console. Includes 2 Midnight Black DualSense controllers, dual controller charging dock, HDMI 2.1 cable, and God of War Ragnarök.',
+            wishlist: 'Looking for Century generator, Scanfrost fridge, or Teak dining table + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:10:00Z'
+        },
+        {
+            id: 'item_game_3',
+            ownerId: 'usr_tunde',
+            title: 'PlayStation 4 Slim 1TB + 3 Games (EA FC 24, GTA V, MK11)',
+            category: 'Gaming & Tech',
+            condition: 'Good',
+            estimatedValue: 185000,
+            location: 'Yaba, Lagos',
+            distanceKm: 2.2,
+            imageUrl: PRESET_IMAGES[13].url,
+            description: 'Sleek 1TB PS4 Slim console in matte black with 2 DualShock 4 wireless controllers and 3 original disc games (EA FC 24, GTA V, Mortal Kombat 11).',
+            wishlist: 'Looking for mechanical keyboard, noise-cancelling headphones, or vintage Nokia phones.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:20:00Z'
+        },
+        {
+            id: 'item_game_4',
+            ownerId: 'usr_chidi',
+            title: 'Logitech G29 Driving Force Racing Wheel & Pedals',
+            category: 'Gaming & Tech',
+            condition: 'Brand New',
+            estimatedValue: 150000,
+            location: 'Lekki Phase 1, Lagos',
+            distanceKm: 7.0,
+            imageUrl: PRESET_IMAGES[14].url,
+            description: 'Dual-motor force feedback racing wheel with stainless steel paddle shifters and responsive floor pedals. Compatible with PS5, PS4 & PC.',
+            wishlist: 'Looking for Nintendo Switch OLED, Sony headphones, or generator.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:30:00Z'
+        },
+        {
+            id: 'item_game_5',
+            ownerId: 'usr_tunde',
+            title: 'ASUS ROG Ally Z1 Extreme Handheld Gaming PC (512GB SSD)',
+            category: 'Gaming & Tech',
+            condition: 'Like New',
+            estimatedValue: 420000,
+            location: 'Yaba, Lagos',
+            distanceKm: 1.9,
+            imageUrl: PRESET_IMAGES[15].url,
+            description: 'Full Windows 11 handheld gaming device with 120Hz FHD screen and AMD Ryzen Z1 Extreme processor. Plays AAA PC games natively on the go.',
+            wishlist: 'Looking for PS5 console, high capacity generator, or vintage film camera + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:40:00Z'
         },
 
         // --- MUSIC & AUDIO ---
