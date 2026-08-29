@@ -8,12 +8,12 @@
 
     // LOCAL STORAGE KEYS
     const STORAGE_KEYS = {
-        USERS: 'bbb_users_v3',
-        ITEMS: 'bbb_items_v3',
-        OFFERS: 'bbb_offers_v3',
-        MESSAGES: 'bbb_messages_v3',
-        ACTIVE_USER: 'bbb_active_user_v3',
-        THEME: 'bbb_theme_v3'
+        USERS: 'bbb_users_v4',
+        ITEMS: 'bbb_items_v4',
+        OFFERS: 'bbb_offers_v4',
+        MESSAGES: 'bbb_messages_v4',
+        ACTIVE_USER: 'bbb_active_user_v4',
+        THEME: 'bbb_theme_v4'
     };
 
     // HIGH-QUALITY PRESET IMAGE URLS FOR CLEAN DEMO LISTINGS
@@ -33,7 +33,11 @@
         { name: 'PS5 Console', url: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80' },
         { name: 'PS4 Slim Console', url: 'https://images.unsplash.com/photo-1507457379470-08b800bebc67?auto=format&fit=crop&w=600&q=80' },
         { name: 'Racing Wheel', url: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80' },
-        { name: 'ASUS ROG Ally', url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80' }
+        { name: 'ASUS ROG Ally', url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Talking Drum (Gangan)', url: 'https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Bata Drum', url: 'https://images.unsplash.com/photo-1543791187-df796fa11835?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Traditional Flute (Oja)', url: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Yamaha Keyboard', url: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=600&q=80' }
     ];
 
     // NIGERIAN PERSONA USERS
@@ -334,6 +338,70 @@
             allowTopUp: true,
             status: 'available',
             createdAt: '2026-08-29T11:15:00Z'
+        },
+        {
+            id: 'item_music_2',
+            ownerId: 'usr_funke',
+            title: 'Handcrafted Yoruba Talking Drum (Gangan) Set',
+            category: 'Music & Audio',
+            condition: 'Like New',
+            estimatedValue: 35000,
+            location: 'Bodija, Ibadan',
+            distanceKm: 12.5,
+            imageUrl: PRESET_IMAGES[16].url,
+            description: 'Authentic handcrafted Yoruba Talking Drum (Gangan) made from carved hardwood and genuine goatskin head with pitch control cords. Includes curved Opa striker stick.',
+            wishlist: 'Looking for vintage Aso-Oke, retro Walkman phone, or acoustic guitar accessories.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:25:00Z'
+        },
+        {
+            id: 'item_music_3',
+            ownerId: 'usr_amina',
+            title: 'Sacred African Batá Drum Pair (Iya Ilu & Omele)',
+            category: 'Music & Audio',
+            condition: 'Good',
+            estimatedValue: 55000,
+            location: 'Wuse II, Abuja',
+            distanceKm: 3.8,
+            imageUrl: PRESET_IMAGES[17].url,
+            description: 'Double-headed hourglass-shaped African Batá drum set hand-carved with traditional brass bells (Saworo). Rich resonant tone for cultural performances.',
+            wishlist: 'Looking for vintage film camera, mechanical keyboard, or headphones + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:35:00Z'
+        },
+        {
+            id: 'item_music_4',
+            ownerId: 'usr_chidi',
+            title: 'Traditional Handcrafted Oja Whistle & Bamboo Flute Set',
+            category: 'Music & Audio',
+            condition: 'Brand New',
+            estimatedValue: 20000,
+            location: 'Lekki Phase 1, Lagos',
+            distanceKm: 6.8,
+            imageUrl: PRESET_IMAGES[18].url,
+            description: 'Traditional Igbo Oja whistle flute hand-carved from solid mahogany paired with a 6-hole tuned bamboo concert flute. High-pitched crisp acoustic tones.',
+            wishlist: 'Looking for Nokia 3310 retro phone, dumbbells, or audio cables.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:45:00Z'
+        },
+        {
+            id: 'item_music_5',
+            ownerId: 'usr_funke',
+            title: 'Yamaha YPG-235 76-Key Portable Grand Piano Keyboard',
+            category: 'Music & Audio',
+            condition: 'Like New',
+            estimatedValue: 175000,
+            location: 'Bodija, Ibadan',
+            distanceKm: 11.2,
+            imageUrl: PRESET_IMAGES[19].url,
+            description: '76 touch-sensitive keys with Graded Soft Touch action. Includes power adapter, sheet music stand, sustain pedal, and heavy-duty X-stand.',
+            wishlist: 'Looking for Scanfrost fridge, electric guitar, or PS4 console + cash top up.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T11:55:00Z'
         }
     ];
 
